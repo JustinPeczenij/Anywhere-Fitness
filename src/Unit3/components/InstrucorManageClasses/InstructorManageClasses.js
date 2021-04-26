@@ -8,34 +8,13 @@
 - `Location`
 - `Current number of registered attendees`
 - `Max class size`*/
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import InstructorClass from './InstructorClass';
-import CreateClassPage from './CreateClassPage'
+import CreateClass from './CreateClass'
 
-export default function InstructorManageClasses() {
-    const [classes, setClasses] = useState([{
-        name: 'class1',
-        type: 'yoga',
-        startTime: '1pm',
-        duration: '2 hours',
-        intensityLevel: 'intermediate',
-        location:'Albany, NY',
-        noRegistered: 32,
-        maxClassSize: 53,
-        id: 1
-    },
-    {
-        name: 'class2',
-        type: 'pilates',
-        startTime: '3pm',
-        duration: '8 hours',
-        intensityLevel: 'beginner',
-        location:'New York, NY',
-        noRegistered: 21,
-        maxClassSize: 30,
-        id: 2
-    }, ])
+export default function InstructorManageClasses(props) {
+    const [isCreating, setIsCreating] = useState(false)
+    const { classes, setClasses } = props
 
     useEffect(()=> {
         //GET REQUEST for classes specific instructors classes
@@ -44,15 +23,15 @@ export default function InstructorManageClasses() {
     
     return (
         <div className='manage-class-container'>
-            
             <h2>Class Management</h2>
-            
-                <Link to='/manage/create'>
-                    <button>Create a Class</button>
-                </Link>
+            {
+            isCreating
+            ? <CreateClass setIsCreating={setIsCreating} /> 
+            : <button onClick={()=> setIsCreating(true)}>Create a Class</button>
+            }
             <div>
                 { //c is class
-                classes.map(c => <InstructorClass key={c.location} c={c}/>)
+                classes.map(c => <InstructorClass key={c.location} c={c} setClasses={setClasses}/>)
                 }
             </div>
         </div>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function EditClass(props) {
-    const { c, setIsEditing } = props;
+    const { c, setIsEditing, setClasses } = props;
     const [formValues, setFormValues] = useState({
         name: c.name,
         type: c.type,
@@ -30,7 +30,12 @@ export default function EditClass(props) {
         setIsEditing(false)
     }
 
-    return (
+    const deleteClass = () => {
+        //axios delete 
+        //promise should set classes to new array
+    }
+
+    return (<>
             <form onSubmit={saveChanges}>
                 <label htmlFor='name'>Name </label>
                 <input
@@ -75,7 +80,9 @@ export default function EditClass(props) {
                     onChange={handleChanges}
                 />
                 <button type='submit'>Save Changes</button>
-                <button onClick={() => setIsEditing(false)}>Cancel Changes</button>
+                <button type='button'>delete</button>
+                <button type='button' onClick={() => setIsEditing(false)}>Cancel Changes</button>
             </form>
+        </>
         )
 }
