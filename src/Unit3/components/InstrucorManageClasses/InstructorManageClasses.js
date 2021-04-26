@@ -11,6 +11,7 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import InstructorClass from './InstructorClass';
+import CreateClassPage from './CreateClassPage'
 
 export default function InstructorManageClasses() {
     const [classes, setClasses] = useState([{
@@ -37,13 +38,15 @@ export default function InstructorManageClasses() {
     }, ])
 
     useEffect(()=> {
-        //GET REQUEST for classes
+        //GET REQUEST for classes specific instructors classes
         //set classes to state
     })
     
     return (
         <div className='manage-class-container'>
+            
             <h2>Class Management</h2>
+            
                 <Link to='/manage/create'>
                     <button>Create a Class</button>
                 </Link>
