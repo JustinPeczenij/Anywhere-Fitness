@@ -3,9 +3,11 @@ import { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import InstructorManageClasses from './Unit3/components/InstrucorManageClasses/InstructorManageClasses';
 import CreateClass from './Unit3/components/InstrucorManageClasses/CreateClass';
+import Login from './Unit2/components/Login';
 
 function App() {
-    const [classes, setClasses] = useState([{
+    
+  const [classes, setClasses] = useState([{
         name: 'class1',
         type: 'Yoga',
         starttime: 'May 28th 2021, 2:15 am',
@@ -51,7 +53,8 @@ function App() {
         </Route>
         <Route path='/manage'>
           <InstructorManageClasses classes={classes} setClasses={setClasses} />
-        </Route> 
+        </Route>
+        <Route exact path='/' component={Login}/> 
       </Switch>
     </div>
   );

@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { axiosWithAuth } from '../../utils/axiosWithAuth'
 
 //MatUI Date Picker
 import DateMomentUtils from '@date-io/moment'; // choose your lib
 import {
-  DatePicker,
   TimePicker,
   DateTimePicker,
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import moment from 'moment';
+import { baseURL } from '../../utils/baseURL';
 
 export default function CreateClassPage(props) {
     const { setClasses, setIsCreating } = props;
@@ -21,7 +21,7 @@ export default function CreateClassPage(props) {
         intensitylevel: '',
         location: '',
         numregisteredattendees: 0,
-        maxclasssize: 0,
+        maxsize: 0,
     })
 
     const handleChanges = (e) => {
@@ -36,12 +36,15 @@ export default function CreateClassPage(props) {
         const newClass = {
             ...formValues,
             duration: parseInt(formValues.duration),
-            maxclasssize: parseInt(formValues.maxclasssize),
-            starttime: `${moment(selectedDate).format("MMM Do YYYY")}, ${moment(selectedDate).format('h:mm a')}`
+            maxsize: parseInt(formValues.maxsize),
+            starttime: `${moment(selectedDate).format('h:mm a')}`,
+            date: `${moment(selectedDate).format("MMM Do YYYY")}`
         }
+        axiosWithAuth().post(`${baseURL}/classes/class`, newClass)
         console.log(newClass)
         //post new class to new class endpoint
         //setClasses to a copy with new class appended.
+        //setisCreating(false)
     }
 
     return (
@@ -109,12 +112,12 @@ export default function CreateClassPage(props) {
                     onChange={handleChanges}
                     value={formValues.location}
                 />
-                <label htmlFor='maxclasssize'>Max Class Size: </label>
+                <label htmlFor='maxsize'>Max Class Size: </label>
                 <input
-                    name='maxclasssize'
+                    name='maxsize'
                     type='text'
                     onChange={handleChanges}
-                    value={formValues.maxclasssize}
+                    value={formValues.maxsize}
                 />
                 <button type='submit'>Create a Class</button>
                 <button type='button' onClick={()=> setIsCreating(false)}>Cancel</button>

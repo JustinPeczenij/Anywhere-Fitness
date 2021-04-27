@@ -1,16 +1,8 @@
-/*4. Authenticated `Instructor` can create update and delete a `class`. At a minimum, each `class` must have the following properties:
-
-- `Name`
-- `Type`
-- `Start time`
-- `Duration`
-- `Intensity level`
-- `Location`
-- `Current number of registered attendees`
-- `Max class size`*/
 import { useEffect, useState } from 'react';
 import InstructorClass from './InstructorClass';
 import CreateClass from './CreateClass'
+import { axiosWithAuth } from '../../utils/axiosWithAuth';
+import { baseURL } from '../../utils/baseURL';
 
 export default function InstructorManageClasses(props) {
     const [isCreating, setIsCreating] = useState(false)
@@ -19,6 +11,7 @@ export default function InstructorManageClasses(props) {
     useEffect(()=> {
         //GET REQUEST for classes specific instructors classes
         //set classes to state
+        //axiosWithAuth().get/users/getuserinfo
     })
     
     return (
