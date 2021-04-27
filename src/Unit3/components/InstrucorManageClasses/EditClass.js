@@ -7,10 +7,9 @@ export default function EditClass(props) {
         type: c.type,
         startTime: c.startTime,
         duration: c.duration,
-        intensityLevel: c.intensityLevel,
+        intensitylevel: c.intensitylevel,
         location: c.location,
-        noRegistered: c.noRegistered,
-        maxClassSize: c.maxClassSize,
+        maxclasssize: c.maxclasssize,
         id: c.id
     })
 
@@ -23,7 +22,9 @@ export default function EditClass(props) {
 
     const saveChanges = (e) => {
         e.preventDefault();
+        const newClass = {
 
+        }
         //put request to where changes are made to classes
         //set changes global state (classes) so we can see in app.
 
@@ -44,13 +45,17 @@ export default function EditClass(props) {
                     value={formValues.name}
                     onChange={handleChanges}
                 />
-                <label htmlFor='type'>Type </label>
-                <input
-                    name='type'
-                    type='text'
-                    value={formValues.type}
-                    onChange={handleChanges}
-                />
+
+                <label htmlFor='type'>Type of Class: </label>
+                <select name='type' onChange={handleChanges} value={formValues.type}>
+                    <option>-- Type --</option>
+                    <option value='Yoga'>Yoga</option>
+                    <option value='Pilates'>Pilates</option>
+                    <option value='Weight Lifting'>Weight Lifting</option>
+                    <option value='Cardio'>Cardio</option>
+                    <option value='Movement'>Movement</option>
+                </select>
+
                 <label htmlFor='startDate'>Start Date </label>
                 <input
                     name='startDate'
@@ -72,18 +77,18 @@ export default function EditClass(props) {
                     value={formValues.duration}
                     onChange={handleChanges}
                 />
-                <label htmlFor='intensityLevel'>Intensity Level </label>
+                <label htmlFor='intensitylevel'>Intensity Level </label>
                 <input
-                    name='intensityLevel'
+                    name='intensitylevel'
                     type='text'
-                    value={formValues.intensityLevel}
+                    value={formValues.intensitylevel}
                     onChange={handleChanges}
                 />
-                <label htmlFor='maxClassSize'>Max Class Size </label>
+                <label htmlFor='maxclasssize'>Max Class Size </label>
                 <input
-                    name='maxClassSize'
+                    name='maxclasssize'
                     type='text'
-                    value={formValues.maxClassSize}
+                    value={formValues.maxclasssize}
                     onChange={handleChanges}
                 />
                 <button type='submit'>Save Changes</button>
