@@ -6,8 +6,10 @@ export default function InstructorClass(props) {
     const [isEditing, setIsEditing] = useState(false)
 
     const deleteClass = () => {
+
         //axios delete 
         //promise should set classes to new array
+        
     }
 
     return (

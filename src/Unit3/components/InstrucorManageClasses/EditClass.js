@@ -51,6 +51,13 @@ export default function EditClass(props) {
                     value={formValues.type}
                     onChange={handleChanges}
                 />
+                <label htmlFor='startDate'>Start Date </label>
+                <input
+                    name='startDate'
+                    type='text'
+                    onChange={handleChanges}
+                    value={formValues.startDate}
+                />
                 <label htmlFor='startTime'>Start Time </label>
                 <input
                     name='startTime'
