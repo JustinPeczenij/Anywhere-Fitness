@@ -1,15 +1,24 @@
 import { useState } from 'react';
+//MatUI Date Picker
+import DateMomentUtils from '@date-io/moment'; // choose your lib
+import {
+  TimePicker,
+  DateTimePicker,
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
+import moment from 'moment';
 
 export default function EditClass(props) {
     const { c, setIsEditing, setClasses } = props;
     const [formValues, setFormValues] = useState({
         name: c.name,
         type: c.type,
-        startTime: c.startTime,
+        starttime: c.starttime,
         duration: c.duration,
         intensitylevel: c.intensitylevel,
         location: c.location,
         maxclasssize: c.maxclasssize,
+        numregisteredattendees: c.numregisteredattendees,
         id: c.id
     })
 
@@ -23,8 +32,12 @@ export default function EditClass(props) {
     const saveChanges = (e) => {
         e.preventDefault();
         const newClass = {
-
+            ...formValues,
+            duration: parseInt(formValues.duration),
+            maxclasssize: parseInt(formValues.maxclasssize),
+            starttime: `${moment(formValues.starttime).format("MMM Do YYYY")}, ${moment(formValues.starttime).format('h:mm a')}`
         }
+        console.log(newClass)
         //put request to where changes are made to classes
         //set changes global state (classes) so we can see in app.
 
@@ -36,9 +49,9 @@ export default function EditClass(props) {
         //promise should set classes to new array
     }
 
-    return (<>
+    return (<MuiPickersUtilsProvider utils={DateMomentUtils}>
             <form onSubmit={saveChanges}>
-                <label htmlFor='name'>Name </label>
+                <label htmlFor='name'>Name: </label>
                 <input
                     name='name'
                     type='text'
@@ -56,35 +69,55 @@ export default function EditClass(props) {
                     <option value='Movement'>Movement</option>
                 </select>
 
-                <label htmlFor='startDate'>Start Date </label>
-                <input
-                    name='startDate'
-                    type='text'
-                    onChange={handleChanges}
-                    value={formValues.startDate}
+                <label htmlFor='startDate'>Start Date: </label>
+                <DateTimePicker
+                        animateYearScrolling
+                        clearable
+                        value={formValues.starttime}
+                        onChange={date => setFormValues({
+                            ...formValues,
+                            starttime: date._d
+                        })}
+                        minDate={new Date()}
+                        format="LL"
                 />
-                <label htmlFor='startTime'>Start Time </label>
-                <input
-                    name='startTime'
-                    type='text'
-                    value={formValues.startTime}
-                    onChange={handleChanges}
+                    
+                <label htmlFor='startTime'>Start Time: </label>
+                <TimePicker
+                        name='startTime'
+                        onChange={date => setFormValues({
+                            ...formValues,
+                            starttime: moment(date._d).format("MMM Do YYYY")
+                        })}
+                        value={formValues.starttime}
                 />
-                <label htmlFor='duration'>Duration </label>
-                <input
-                    name='duration'
-                    type='text'
-                    value={formValues.duration}
-                    onChange={handleChanges}
-                />
-                <label htmlFor='intensitylevel'>Intensity Level </label>
+
+                <label htmlFor='duration'>Duration of Class: </label>
+                <select name='duration' onChange={handleChanges} value={formValues.duration}>
+                    <option>-- Minutes --</option>
+                    <option value={Number(30)}>30 minutes</option>
+                    <option value={45}>45 minutes</option>
+                    <option value={60}>1 hour</option>
+                    <option value={90}>1 hour 30 minutes</option>
+                    <option value={120}>2 hours</option>
+                    <option value={180}>3 hours</option>
+                </select>
+
+                <label htmlFor='intensitylevel'>Intensity Level: </label>
                 <input
                     name='intensitylevel'
                     type='text'
                     value={formValues.intensitylevel}
                     onChange={handleChanges}
                 />
-                <label htmlFor='maxclasssize'>Max Class Size </label>
+                <label htmlFor='location'>Location: </label>
+                <input
+                    name='location'
+                    type='text'
+                    value={formValues.location}
+                    onChange={handleChanges}
+                />
+                <label htmlFor='maxclasssize'>Max Class Size: </label>
                 <input
                     name='maxclasssize'
                     type='text'
@@ -95,6 +128,5 @@ export default function EditClass(props) {
                 <button type='button'>delete</button>
                 <button type='button' onClick={() => setIsEditing(false)}>Cancel Changes</button>
             </form>
-        </>
-        )
+        </MuiPickersUtilsProvider>)
 }

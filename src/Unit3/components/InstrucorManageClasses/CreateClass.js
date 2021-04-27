@@ -97,11 +97,9 @@ export default function CreateClassPage(props) {
                 <label htmlFor='intensitylevel'>Intensity Level: </label>
                 <select name='intensitylevel' onChange={handleChanges} value={formValues.intensitylevel}>
                     <option>-- Intensity --</option>
-                    <option value='very-easy'>Very Easy</option>
-                    <option value='easy'>Easy</option>
-                    <option value='medium'>Medium</option>
-                    <option value='hard'>Hard</option>
-                    <option value='very-hard'>Very Hard</option>
+                    <option value='BEGINNER'>BEGINNER</option>
+                    <option value='INTERMEDIATE'>INTERMEDIATE</option>
+                    <option value='EXPERT'>EXPERT</option>
                 </select>
 
                 <label htmlFor='location'>Location: </label>
