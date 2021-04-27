@@ -1,25 +1,27 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
 //MatUI Date Picker
 import DateMomentUtils from '@date-io/moment'; // choose your lib
 import {
+  DatePicker,
   TimePicker,
   DateTimePicker,
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import moment from 'moment';
 
-export default function EditClass(props) {
-    const { c, setIsEditing, setClasses } = props;
+export default function CreateClassPage(props) {
+    const { setClasses, setIsCreating } = props;
+    const [selectedDate, setSelectedDate] = useState(new Date())
     const [formValues, setFormValues] = useState({
-        name: c.name,
-        type: c.type,
-        starttime: c.starttime,
-        duration: c.duration,
-        intensitylevel: c.intensitylevel,
-        location: c.location,
-        maxclasssize: c.maxclasssize,
-        numregisteredattendees: c.numregisteredattendees,
-        id: c.id
+        name: '',
+        type: '',
+        duration: 0,
+        intensitylevel: '',
+        location: '',
+        numregisteredattendees: 0,
+        maxclasssize: 0,
     })
 
     const handleChanges = (e) => {
@@ -29,34 +31,29 @@ export default function EditClass(props) {
         })
     }
 
-    const saveChanges = (e) => {
+    const submitClass = (e) => {
         e.preventDefault();
         const newClass = {
             ...formValues,
             duration: parseInt(formValues.duration),
             maxclasssize: parseInt(formValues.maxclasssize),
-            starttime: `${moment(formValues.starttime).format("MMM Do YYYY")}, ${moment(formValues.starttime).format('h:mm a')}`
+            starttime: `${moment(selectedDate).format("MMM Do YYYY")}, ${moment(selectedDate).format('h:mm a')}`
         }
         console.log(newClass)
-        //put request to where changes are made to classes
-        //set changes global state (classes) so we can see in app.
-
-        setIsEditing(false)
+        //post new class to new class endpoint
+        //setClasses to a copy with new class appended.
     }
 
-    const deleteClass = () => {
-        //axios delete 
-        //promise should set classes to new array
-    }
-
-    return (<MuiPickersUtilsProvider utils={DateMomentUtils}>
-            <form onSubmit={saveChanges}>
-                <label htmlFor='name'>Name: </label>
+    return (
+        <MuiPickersUtilsProvider utils={DateMomentUtils}>
+            <form onSubmit={submitClass}>
+                <legend>Create a Class</legend>
+                <label htmlFor='name'>Class Name: </label>
                 <input
                     name='name'
                     type='text'
-                    value={formValues.name}
                     onChange={handleChanges}
+                    value={formValues.name}
                 />
 
                 <label htmlFor='type'>Type of Class: </label>
@@ -73,11 +70,8 @@ export default function EditClass(props) {
                 <DateTimePicker
                         animateYearScrolling
                         clearable
-                        value={formValues.starttime}
-                        onChange={date => setFormValues({
-                            ...formValues,
-                            starttime: date._d
-                        })}
+                        value={selectedDate}
+                        onChange={date => setSelectedDate(date._d)}
                         minDate={new Date()}
                         format="LL"
                 />
@@ -85,13 +79,10 @@ export default function EditClass(props) {
                 <label htmlFor='startTime'>Start Time: </label>
                 <TimePicker
                         name='startTime'
-                        onChange={date => setFormValues({
-                            ...formValues,
-                            starttime: moment(date._d).format("MMM Do YYYY")
-                        })}
-                        value={formValues.starttime}
+                        onChange={date => setSelectedDate(date._d)}
+                        value={selectedDate}
                 />
-
+                
                 <label htmlFor='duration'>Duration of Class: </label>
                 <select name='duration' onChange={handleChanges} value={formValues.duration}>
                     <option>-- Minutes --</option>
@@ -104,29 +95,31 @@ export default function EditClass(props) {
                 </select>
 
                 <label htmlFor='intensitylevel'>Intensity Level: </label>
-                <input
-                    name='intensitylevel'
-                    type='text'
-                    value={formValues.intensitylevel}
-                    onChange={handleChanges}
-                />
+                <select name='intensitylevel' onChange={handleChanges} value={formValues.intensitylevel}>
+                    <option>-- Intensity --</option>
+                    <option value='BEGINNER'>BEGINNER</option>
+                    <option value='INTERMEDIATE'>INTERMEDIATE</option>
+                    <option value='EXPERT'>EXPERT</option>
+                </select>
+
                 <label htmlFor='location'>Location: </label>
                 <input
                     name='location'
                     type='text'
-                    value={formValues.location}
                     onChange={handleChanges}
+                    value={formValues.location}
                 />
                 <label htmlFor='maxclasssize'>Max Class Size: </label>
                 <input
                     name='maxclasssize'
                     type='text'
-                    value={formValues.maxclasssize}
                     onChange={handleChanges}
+                    value={formValues.maxclasssize}
                 />
-                <button type='submit'>Save Changes</button>
-                <button type='button'>delete</button>
-                <button type='button' onClick={() => setIsEditing(false)}>Cancel Changes</button>
+                <button type='submit'>Create a Class</button>
+                <button type='button' onClick={()=> setIsCreating(false)}>Cancel</button>
             </form>
-        </MuiPickersUtilsProvider>)
+        </MuiPickersUtilsProvider>
+
+    )
 }

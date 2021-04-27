@@ -7,26 +7,38 @@ import CreateClass from './Unit3/components/InstrucorManageClasses/CreateClass';
 function App() {
     const [classes, setClasses] = useState([{
         name: 'class1',
-        type: 'yoga',
-        startTime: '1pm',
-        duration: '2 hours',
-        intensityLevel: 'intermediate',
+        type: 'Yoga',
+        starttime: 'May 28th 2021, 2:15 am',
+        duration: 120,
+        intensitylevel: 'INTERMEDIATE',
         location:'Albany, NY',
-        noRegistered: 32,
-        maxClassSize: 53,
+        numregisteredattendees: 32,
+        maxclasssize: 53,
         id: 1
     },
     {
         name: 'class2',
-        type: 'pilates',
-        startTime: '3pm',
-        duration: '8 hours',
-        intensityLevel: 'beginner',
+        type: 'Pilates',
+        starttime: 'May 28th 2021, 2:15 am',
+        duration: 60,
+        intensitylevel: 'BEGINNER',
         location:'New York, NY',
-        noRegistered: 21,
-        maxClassSize: 30,
+        numregisteredattendees: 21,
+        maxclasssize: 30,
         id: 2
-    }, ])
+    },
+    {
+      duration: 30,
+      intensitylevel: "EXPERT",
+      location: "Allentown,  PA",
+      maxclasssize: 50,
+      name: "Justin K Peczenij",
+      numregisteredattendees: 0,
+      starttime: "May 28th 2021, 2:15 am",
+      type: "Yoga",
+      id: 3
+    }
+  ])
 
   return (
     <div className="App">
