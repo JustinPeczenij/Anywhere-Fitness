@@ -1,8 +1,15 @@
 import './App.css';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import InstructorManageClasses from './Unit3/components/InstrucorManageClasses/InstructorManageClasses';
 import CreateClass from './Unit3/components/InstrucorManageClasses/CreateClass';
+
+//Unit 2 Component Imports:
+import Header from './Unit2/Header'
+import Home from './Unit2/HomeSectional'
+import Login from './Unit2/LoginSectional'
+import Signup from './Unit2/SignupSectional'
+
 
 function App() {
     const [classes, setClasses] = useState([{
@@ -42,8 +49,27 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-          <h1>Anywhere Fitness 💪</h1>
+      <header className="App-header">    
+          {
+            //Header Component:
+          }      
+          <Header />
+
+          {
+            //Header Signup, Login Page Links:
+          }
+          <Switch>
+            <Route path='/signup'>
+              <Signup />
+            </Route>
+            <Route path='/login'>
+              <Login />
+            </Route> 
+            <Route path='/'>
+              <Home />
+            </Route>
+          </Switch>
+          
       </header>
       <Switch>
         <Route path='/manage/create' >
