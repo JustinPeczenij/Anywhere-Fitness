@@ -6,25 +6,38 @@ import { baseURL } from '../../utils/baseURL';
 
 export default function InstructorManageClasses(props) {
     const [isCreating, setIsCreating] = useState(false)
+    const [instructor, setInstructor] = useState({})
     const { classes, setClasses } = props
 
+    //GET INSTRUCTOR'S CLASSES
     useEffect(()=> {
-        //GET REQUEST for classes specific instructors classes
-        //set classes to state
-        //axiosWithAuth().get/users/getuserinfo
-    })
+        axiosWithAuth().get(`${baseURL}/users/getuserinfo`)
+            .then(res =>{
+                setInstructor(res.data)
+                setClasses(res.data.classes)
+            })
+            .catch(err =>console.log(err))
+    }, [setClasses])
     
+    //DELETE CLASS
+    const deleteClass = () => {
+
+        //axios delete 
+        //promise should set classes to new array
+        
+    }
+
     return (
         <div className='manage-class-container'>
             <h2>Class Management</h2>
             {
             isCreating
-            ? <CreateClass setIsCreating={setIsCreating} /> 
+            ? <CreateClass setIsCreating={setIsCreating} instructor={instructor} setClasses={setClasses} classes={classes} /> 
             : <button onClick={()=> setIsCreating(true)}>Create a Class</button>
             }
             <div>
                 { //c is class
-                classes.map(c => <InstructorClass key={c.location} c={c} setClasses={setClasses}/>)
+                classes && classes.map(c => <InstructorClass key={c.classid} c={c} setClasses={setClasses}/>)
                 }
             </div>
         </div>

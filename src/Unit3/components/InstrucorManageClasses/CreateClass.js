@@ -12,7 +12,7 @@ import moment from 'moment';
 import { baseURL } from '../../utils/baseURL';
 
 export default function CreateClassPage(props) {
-    const { setClasses, setIsCreating } = props;
+    const { classes, setClasses, setIsCreating, instructor } = props;
     const [selectedDate, setSelectedDate] = useState(new Date())
     const [formValues, setFormValues] = useState({
         name: '',
@@ -31,6 +31,7 @@ export default function CreateClassPage(props) {
         })
     }
 
+//Create new object and POST to DB
     const submitClass = (e) => {
         e.preventDefault();
         const newClass = {
@@ -38,13 +39,22 @@ export default function CreateClassPage(props) {
             duration: parseInt(formValues.duration),
             maxsize: parseInt(formValues.maxsize),
             starttime: `${moment(selectedDate).format('h:mm a')}`,
-            date: `${moment(selectedDate).format("MMM Do YYYY")}`
+            date: `${moment(selectedDate).format("MMM Do YYYY")}`,
+            instructor: instructor
         }
-        axiosWithAuth().post(`${baseURL}/classes/class`, newClass)
         console.log(newClass)
-        //post new class to new class endpoint
-        //setClasses to a copy with new class appended.
-        //setisCreating(false)
+        axiosWithAuth().post(`${baseURL}/classes/class`, newClass)
+            .then(res => {
+                setClasses([
+                    ...classes,
+                    res.data
+                ])
+                setIsCreating(false)
+            })
+            .catch(err => console.log({err}))
+        // post new class to new class endpoint
+        // setClasses to a copy with new class appended.
+        // setisCreating(false)
     }
 
     return (
@@ -64,7 +74,7 @@ export default function CreateClassPage(props) {
                     <option>-- Type --</option>
                     <option value='Yoga'>Yoga</option>
                     <option value='Pilates'>Pilates</option>
-                    <option value='Weight Lifting'>Weight Lifting</option>
+                    <option value='Weightlifting'>Weightlifting</option>
                     <option value='Cardio'>Cardio</option>
                     <option value='Movement'>Movement</option>
                 </select>
