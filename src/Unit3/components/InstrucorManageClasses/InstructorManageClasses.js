@@ -1,39 +1,50 @@
-/*4. Authenticated `Instructor` can create update and delete a `class`. At a minimum, each `class` must have the following properties:
-
-- `Name`
-- `Type`
-- `Start time`
-- `Duration`
-- `Intensity level`
-- `Location`
-- `Current number of registered attendees`
-- `Max class size`*/
 import { useEffect, useState } from 'react';
 import InstructorClass from './InstructorClass';
 import CreateClass from './CreateClass'
+import { axiosWithAuth } from '../../utils/axiosWithAuth';
+import { baseURL } from '../../utils/baseURL';
+import styled from 'styled-components'
+
+const StyledDiv = styled.div`
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+`;
+
+const StyledButton = styled.button`
+    width: 10%;
+    height: 5%;
+`;
 
 export default function InstructorManageClasses(props) {
+    const [classes, setClasses] = useState([])
     const [isCreating, setIsCreating] = useState(false)
-    const { classes, setClasses } = props
+    const [instructor, setInstructor] = useState({})
 
+    //GET INSTRUCTOR'S CLASSES`
     useEffect(()=> {
-        //GET REQUEST for classes specific instructors classes
-        //set classes to state
-    })
+        axiosWithAuth().get(`${baseURL}/users/getuserinfo`)
+            .then(res =>{
+                setInstructor(res.data)
+                setClasses(res.data.classes)
+            })
+            .catch(err =>console.log(err))
+    }, [setClasses, ])
     
     return (
-        <div className='manage-class-container'>
+        <StyledDiv>
             <h2>Class Management</h2>
             {
             isCreating
-            ? <CreateClass setIsCreating={setIsCreating} /> 
-            : <button onClick={()=> setIsCreating(true)}>Create a Class</button>
+            ? <CreateClass setIsCreating={setIsCreating} instructor={instructor} setClasses={setClasses} classes={classes} /> 
+            : <StyledButton onClick={()=> setIsCreating(true)}>Create a Class</StyledButton>
             }
-            <div>
+            <div style={{display: 'flex', flexFlow: 'row wrap', width:'100%', justifyContent: 'space-evenly'}}>
                 { //c is class
-                classes.map(c => <InstructorClass key={c.location} c={c} setClasses={setClasses}/>)
+                classes && classes.map(c => <InstructorClass key={c.classid} c={c} classes={classes} setClasses={setClasses} instructor={instructor} />)
                 }
             </div>
-        </div>
+        </StyledDiv>
     )
 }
