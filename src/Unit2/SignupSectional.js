@@ -1,10 +1,22 @@
 import React, { useState} from 'react';
 import axios from 'axios';
+<<<<<<< HEAD
 
 import SignupForm from './SignupForm';
 
 const initialFormValues = {
   role: '',
+=======
+import { useHistory } from 'react-router-dom';
+
+import SignupForm from './SignupForm'
+import { baseURL } from '../Unit3/utils/baseURL';
+
+const initialFormValues = {
+  role: '',
+  primaryemail: '',
+  username: '',
+>>>>>>> 101f2749ab1352cd072e0ff6e44d887ee5687f7c
   password: '',
   primaryemail: '',
   username: '',
@@ -12,14 +24,21 @@ const initialFormValues = {
 
 export default function Signup() {
   const [formValues, setFormValues] = useState(initialFormValues)
-
+  const history = useHistory();
 
   //Functions Input Interactivity:
   const updateForm = (inputName, inputValue) => {
     setFormValues({...formValues, [inputName]: inputValue })
   }
+
+  //LOGIN FUNCTION
   const submitForm = () => {
     const newClient = {
+<<<<<<< HEAD
+=======
+      primaryemail: formValues.primaryemail,
+      username: formValues.username,
+>>>>>>> 101f2749ab1352cd072e0ff6e44d887ee5687f7c
       password: formValues.password,
       primaryemail: formValues.primaryemail,
       username: formValues.username,
@@ -32,6 +51,7 @@ export default function Signup() {
 
 
     //PREVENT EMPTY SUBMISSIONS:
+<<<<<<< HEAD
     if (!newClient.username || !newClient.primaryemail || !newClient.password || !clientRole.role) return
 
     //LOGIN FUNCTIONALITY HERE (SHOULD PROBABLY WRAP AXIOS POST for signup):
@@ -54,6 +74,23 @@ export default function Signup() {
                       console.log(err);
                    })
             }
+=======
+    // if (!newClient.username || !newClient.password || !newClient.primaryemail || !newClient.role) return
+
+
+
+    //Axios POSTS HERE (should CLEAR form on successful submission...avoids multiple posts of same card):
+
+    axios.post(`${baseURL}/createnew${formValues.role}`, newClient) 
+      .then(res => {
+        setFormValues(initialFormValues)
+        window.localStorage.setItem('token', res.data.access_token)
+        formValues.role === 'instructor' ? history.push('/manage') : history.push('/client')
+      })
+      .catch(err => {
+        console.log(err);
+      })
+>>>>>>> 101f2749ab1352cd072e0ff6e44d887ee5687f7c
   }
   return (
     <div className='login-sectional'>

@@ -7,19 +7,22 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import moment from 'moment';
+import { axiosWithAuth } from '../../utils/axiosWithAuth';
+import { baseURL } from '../../utils/baseURL'
 
 export default function EditClass(props) {
-    const { c, setIsEditing, setClasses } = props;
+    const { c, setIsEditing, classes, setClasses, deleteClass, instructor } = props;
     const [formValues, setFormValues] = useState({
         name: c.name,
         type: c.type,
         starttime: c.starttime,
+        date: c.date,
         duration: c.duration,
         intensitylevel: c.intensitylevel,
         location: c.location,
-        maxclasssize: c.maxclasssize,
+        maxsize: c.maxsize,
         numregisteredattendees: c.numregisteredattendees,
-        id: c.id
+        classid: c.classid
     })
 
     const handleChanges = (e) => {
@@ -34,19 +37,23 @@ export default function EditClass(props) {
         const newClass = {
             ...formValues,
             duration: parseInt(formValues.duration),
-            maxclasssize: parseInt(formValues.maxclasssize),
-            starttime: `${moment(formValues.starttime).format("MMM Do YYYY")}, ${moment(formValues.starttime).format('h:mm a')}`
+            maxsize: parseInt(formValues.maxsize),
+            starttime: `${moment(formValues.starttime).format('h:mm a')}`,
+            instructor: instructor
         }
         console.log(newClass)
+        axiosWithAuth().patch(`${baseURL}/classes/class/${c.classid}`, newClass)
+            .then(res => {
+                console.log(res)
+                setClasses([
+                    ...classes.filter(cl => cl.classid !== newClass.classid), newClass
+                ])
+            })
+            .catch(err => console.log(err))
         //put request to where changes are made to classes
         //set changes global state (classes) so we can see in app.
 
         setIsEditing(false)
-    }
-
-    const deleteClass = () => {
-        //axios delete 
-        //promise should set classes to new array
     }
 
     return (<MuiPickersUtilsProvider utils={DateMomentUtils}>
@@ -71,8 +78,6 @@ export default function EditClass(props) {
 
                 <label htmlFor='startDate'>Start Date: </label>
                 <DateTimePicker
-                        animateYearScrolling
-                        clearable
                         value={formValues.starttime}
                         onChange={date => setFormValues({
                             ...formValues,
@@ -87,7 +92,7 @@ export default function EditClass(props) {
                         name='startTime'
                         onChange={date => setFormValues({
                             ...formValues,
-                            starttime: moment(date._d).format("MMM Do YYYY")
+                            starttime: (date._d)
                         })}
                         value={formValues.starttime}
                 />
@@ -104,12 +109,13 @@ export default function EditClass(props) {
                 </select>
 
                 <label htmlFor='intensitylevel'>Intensity Level: </label>
-                <input
-                    name='intensitylevel'
-                    type='text'
-                    value={formValues.intensitylevel}
-                    onChange={handleChanges}
-                />
+                <select name='intensitylevel' value={formValues.intensitylevel} onChange={handleChanges}>
+                    <option>-- Intensity --</option>
+                    <option value='BEGINNER'>BEGINNER</option>
+                    <option value='INTERMEDIATE'>INTERMEDIATE</option>
+                    <option value='EXPERT'>EXPERT</option>                    
+                </select>
+
                 <label htmlFor='location'>Location: </label>
                 <input
                     name='location'
@@ -117,15 +123,15 @@ export default function EditClass(props) {
                     value={formValues.location}
                     onChange={handleChanges}
                 />
-                <label htmlFor='maxclasssize'>Max Class Size: </label>
+                <label htmlFor='maxsize'>Max Class Size: </label>
                 <input
-                    name='maxclasssize'
+                    name='maxsize'
                     type='text'
-                    value={formValues.maxclasssize}
+                    value={formValues.maxsize}
                     onChange={handleChanges}
                 />
                 <button type='submit'>Save Changes</button>
-                <button type='button'>delete</button>
+                <button type='button' onClick={() => deleteClass()}>DELETE</button>
                 <button type='button' onClick={() => setIsEditing(false)}>Cancel Changes</button>
             </form>
         </MuiPickersUtilsProvider>)
