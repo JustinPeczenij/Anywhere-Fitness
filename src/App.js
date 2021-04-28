@@ -1,5 +1,4 @@
 import './App.css';
-import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import { PrivateRoute } from './Unit3/utils/PrivateRoute'
@@ -38,7 +37,7 @@ function App() {
       </header>
       <Switch>
         <PrivateRoute path='/manage' component={InstructorManageClasses} />
-        <Route exact path='/' component={Login}/> 
+        <Route exact path='/' /> 
       </Switch>
     </div>
   );

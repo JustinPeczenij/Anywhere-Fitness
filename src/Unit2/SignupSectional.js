@@ -5,6 +5,7 @@ import SignupForm from './SignupForm'
 
 const initialFormValues = {
   role: '',
+  primaryemail: '',
   username: '',
   password: '',
 }
@@ -21,13 +22,13 @@ export default function Signup(props) {
     //NEED TO KNOW if I should be producing individual users/instructors (separately) ??:
     const newClient = {
       role: formValues.role,
-      email: formValues.email,
+      primaryemail: formValues.primaryemail,
       username: formValues.username,
       password: formValues.password,
     }
 
     //PREVENT EMPTY SUBMISSIONS:
-    if (!newClient.username || !newClient.email || !newClient.role) return
+    if (!newClient.username || !newClient.password || !newClient.primaryemail || !newClient.role) return
 
 
     //Axios POSTS HERE (should CLEAR form on successful submission...avoids multiple posts of same card):

@@ -1,42 +1,45 @@
 import React, { useState } from 'react';
-
-import LoginForm from './LoginForm'
+import axios from 'axios';
+import LoginForm from './LoginForm';
+import { baseURL } from '../Unit3/utils/baseURL';
+import { useHistory } from 'react-router-dom';
 
 const initialFormValues = {
-  role: '',
   username: '',
   password: '',
 }
 
 export default function Login(props) {
   const [formValues, setFormValues] = useState(initialFormValues)
-
-
+  const history = useHistory()
   //Functions Input Interactivity:
   const updateForm = (inputName, inputValue) => {
     setFormValues({...formValues, [inputName]: inputValue })
   }
+  
   const submitForm = () => {
-    //NEED TO KNOW if I should be producing individual users/instructors (separately) ??:
-    const newClient = {
-      role: formValues.role,
-      username: formValues.username,
-      password: formValues.password,
-    }
-
     //PREVENT EMPTY SUBMISSIONS:
-    if (!newClient.username || !newClient.email || !newClient.role) return
+    // if (!formValues.username || !formValues.role) return
 
-
-    //Axios POSTS HERE (should CLEAR form on successful submission...avoids multiple posts of same card):
-    // axios.post('fakeapi.com', newClient)
-    //   .then(res => {
-    //     setFormValues(initialFormValues)
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   })
-  }
+    axios.post(
+				`${baseURL}/login`,
+				`grant_type=password&username=${formValues.username}&password=${formValues.password}`,
+				{
+					headers: { // btoa is converting our client id/client secret into base64
+						Authorization: `Basic ${btoa('lambda-client:lambda-secret')}`,
+						'Content-Type': 'application/x-www-form-urlencoded',
+					}
+				,}
+			,)
+			.then((res) => {
+				console.log(res)
+				localStorage.setItem('token', res.data.access_token);
+				history.push('/manage');
+			})
+			.catch((err) => {
+				setFormValues(initialFormValues);
+			});
+	};
 
   return (
       <div className='login-sectional'>

@@ -23,21 +23,12 @@ export default function SignupForm(props) {
             <form className='signup-form-section' onSubmit={onSubmit}>
                 <label>Role:
                     <select value={signupValues.role} name='role' onChange={onChange} placeholder='...select...'>
-                        <option value=''>Select Postion:</option>
+                        <option value=''>--Select Postion--</option>
                         <option value='Instructor'>Instructor</option>
                         <option value='User'>User</option>
                     </select>
                 </label>
 
-                <label>Primary Email:
-                    <input
-                        type='text'
-                        onChange={onChange}
-                        value={signupValues.email}
-                        name='email'
-                        maxLength='40'
-                    />
-                </label>
 
                 <label>Username:
                     <input
@@ -58,6 +49,15 @@ export default function SignupForm(props) {
                     />
                 </label>
                 
+                <label>Email:
+                    <input
+                        type='text'
+                        onChange={onChange}
+                        value={signupValues.primaryemail}
+                        name='primaryemail'
+                        maxLength='40'
+                    />
+                </label>
                 <div className='submitbtn'>
                     <button>Submit</button>
                 </div>
