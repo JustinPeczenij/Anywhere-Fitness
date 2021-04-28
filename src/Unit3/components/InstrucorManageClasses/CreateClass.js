@@ -52,9 +52,6 @@ export default function CreateClassPage(props) {
                 setIsCreating(false)
             })
             .catch(err => console.log({err}))
-        // post new class to new class endpoint
-        // setClasses to a copy with new class appended.
-        // setisCreating(false)
     }
 
     return (
@@ -82,10 +79,10 @@ export default function CreateClassPage(props) {
                 <label htmlFor='startDate'>Start Date: </label>
                 <DateTimePicker
                         animateYearScrolling
-                        clearable
                         value={selectedDate}
                         onChange={date => setSelectedDate(date._d)}
                         minDate={new Date()}
+                        format="LL"
                 />
                     
                 <label htmlFor='startTime'>Start Time: </label>

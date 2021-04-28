@@ -18,9 +18,9 @@ const StyledButton = styled.button`
 `;
 
 export default function InstructorManageClasses(props) {
+    const [classes, setClasses] = useState([])
     const [isCreating, setIsCreating] = useState(false)
     const [instructor, setInstructor] = useState({})
-    const { classes, setClasses } = props
 
     //GET INSTRUCTOR'S CLASSES`
     useEffect(()=> {
@@ -30,7 +30,7 @@ export default function InstructorManageClasses(props) {
                 setClasses(res.data.classes)
             })
             .catch(err =>console.log(err))
-    }, [setClasses])
+    }, [setClasses, ])
     
     return (
         <StyledDiv>

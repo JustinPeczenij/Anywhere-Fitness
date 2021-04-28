@@ -33,7 +33,7 @@ export default function InstructorClass(props) {
             <p>Type: {c.type}</p>
             <p>Duration: {c.duration} minutes</p>
             <p>Where: {c.location}</p>
-            <p>When: {c.starttime}</p>
+            <p>When: {c.date} @ {c.starttime}</p>
             {isEditing ? null : <button onClick={() => setIsEditing(true)}>edit</button>}
         </div>
         <div>

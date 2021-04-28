@@ -92,7 +92,7 @@ export default function EditClass(props) {
                         name='startTime'
                         onChange={date => setFormValues({
                             ...formValues,
-                            starttime: moment(date._d).format("MMM Do YYYY")
+                            starttime: (date._d)
                         })}
                         value={formValues.starttime}
                 />
@@ -109,12 +109,13 @@ export default function EditClass(props) {
                 </select>
 
                 <label htmlFor='intensitylevel'>Intensity Level: </label>
-                <input
-                    name='intensitylevel'
-                    type='text'
-                    value={formValues.intensitylevel}
-                    onChange={handleChanges}
-                />
+                <select name='intensitylevel' value={formValues.intensitylevel} onChange={handleChanges}>
+                    <option>-- Intensity --</option>
+                    <option value='BEGINNER'>BEGINNER</option>
+                    <option value='INTERMEDIATE'>INTERMEDIATE</option>
+                    <option value='EXPERT'>EXPERT</option>                    
+                </select>
+
                 <label htmlFor='location'>Location: </label>
                 <input
                     name='location'
@@ -130,7 +131,7 @@ export default function EditClass(props) {
                     onChange={handleChanges}
                 />
                 <button type='submit'>Save Changes</button>
-                <button type='button' onClick={() => deleteClass()}>delete</button>
+                <button type='button' onClick={() => deleteClass()}>DELETE</button>
                 <button type='button' onClick={() => setIsEditing(false)}>Cancel Changes</button>
             </form>
         </MuiPickersUtilsProvider>)
