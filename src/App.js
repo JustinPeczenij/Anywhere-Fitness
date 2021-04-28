@@ -1,5 +1,4 @@
 import './App.css';
-import { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import InstructorManageClasses from './Unit3/components/InstrucorManageClasses/InstructorManageClasses';
 import Login from './Unit2/components/Login';
