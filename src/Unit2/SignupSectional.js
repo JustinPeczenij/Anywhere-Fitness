@@ -1,15 +1,16 @@
 import React, { useState} from 'react';
-//import axios from 'axios' WILL BE USED FOR API POSTS
+import axios from 'axios';
 
-import SignupForm from './SignupForm'
+import SignupForm from './SignupForm';
 
 const initialFormValues = {
   role: '',
-  username: '',
   password: '',
-}
+  primaryemail: '',
+  username: '',
+};
 
-export default function Signup(props) {
+export default function Signup() {
   const [formValues, setFormValues] = useState(initialFormValues)
 
 
@@ -18,27 +19,41 @@ export default function Signup(props) {
     setFormValues({...formValues, [inputName]: inputValue })
   }
   const submitForm = () => {
-    //NEED TO KNOW if I should be producing individual users/instructors (separately) ??:
     const newClient = {
-      role: formValues.role,
-      email: formValues.email,
-      username: formValues.username,
       password: formValues.password,
+      primaryemail: formValues.primaryemail,
+      username: formValues.username,
+    }
+    //Can't have empty role or else can't determine where to POST (instructor or client), 
+    //NEEDS to be separate from newClient so object keys match Model (POST):
+    const clientRole = {
+      role: formValues.role,
     }
 
+
     //PREVENT EMPTY SUBMISSIONS:
-    if (!newClient.username || !newClient.email || !newClient.role) return
+    if (!newClient.username || !newClient.primaryemail || !newClient.password || !clientRole.role) return
 
-
-    //Axios POSTS HERE (should CLEAR form on successful submission...avoids multiple posts of same card):
-    
-    // axios.post('fakeapi.com', newClient)    *Post endpoint here..?
-    //   .then(res => {
-    //     setFormValues(initialFormValues)
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   })
+    //LOGIN FUNCTIONALITY HERE (SHOULD PROBABLY WRAP AXIOS POST for signup):
+        //Axios POSTS HERE ()
+            if (clientRole.Role === 'Instructor') {
+              axios.post('https://team-32-anywhere-fitness.herokuapp.com/createnewinstructor', newClient)
+                   .then(res => {
+                      setFormValues(initialFormValues)
+                   })
+                   .catch(err => {
+                      console.log(err);
+                   })
+            }
+            else {
+              axios.post('https://team-32-anywhere-fitness.herokuapp.com/createnewclient', newClient)
+                   .then(res => {
+                      setFormValues(initialFormValues)
+                   })
+                   .catch(err => {
+                      console.log(err);
+                   })
+            }
   }
   return (
     <div className='login-sectional'>

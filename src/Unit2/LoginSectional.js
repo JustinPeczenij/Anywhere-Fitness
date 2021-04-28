@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import LoginForm from './LoginForm'
 
 const initialFormValues = {
-  role: '',
-  username: '',
   password: '',
+  primaryemail: '',
+  username: '',
 }
 
-export default function Login(props) {
+export default function Login() {
   const [formValues, setFormValues] = useState(initialFormValues)
 
 
@@ -17,25 +17,24 @@ export default function Login(props) {
     setFormValues({...formValues, [inputName]: inputValue })
   }
   const submitForm = () => {
-    //NEED TO KNOW if I should be producing individual users/instructors (separately) ??:
     const newClient = {
-      role: formValues.role,
-      username: formValues.username,
       password: formValues.password,
+      primaryemail: formValues.primaryemail,
+      username: formValues.username,
+    }
+    //NEEDS to be separate from newClient so object keys match Model (POST):
+    //Will likely need new code to reveal auth code (or for initializing auth code):
+    const clientRole = {
+      role: formValues.role,
     }
 
+
     //PREVENT EMPTY SUBMISSIONS:
-    if (!newClient.username || !newClient.email || !newClient.role) return
+    if (!newClient.username || !newClient.primaryemail || !newClient.password || !clientRole.role) return
+
+    //LOGIN FUNCTIONALITY HERE:
 
 
-    //Axios POSTS HERE (should CLEAR form on successful submission...avoids multiple posts of same card):
-    // axios.post('fakeapi.com', newClient)
-    //   .then(res => {
-    //     setFormValues(initialFormValues)
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   })
   }
 
   return (

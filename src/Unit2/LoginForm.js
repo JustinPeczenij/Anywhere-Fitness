@@ -30,6 +30,25 @@ export default function LoginForm(props) {
                 </label>
                 <h4>*User type should reveal auth code input if instructor selected*</h4>
 
+                <label>Password:
+                    <input
+                        type='text'
+                        onChange={onChange}
+                        value={loginValues.password}
+                        name='password'
+                    />
+                </label>
+
+                <label>Primary Email:
+                    <input
+                        type='text'
+                        onChange={onChange}
+                        value={loginValues.primaryemail}
+                        name='primaryemail'
+                        maxLength='40'
+                    />
+                </label>
+
                 <label>Username:
                     <input
                         type='text'
@@ -37,15 +56,6 @@ export default function LoginForm(props) {
                         value={loginValues.username}
                         name='username'
                         maxLength='20'
-                    />
-                </label>
-
-                <label>Password:
-                    <input
-                        type='text'
-                        onChange={onChange}
-                        value={loginValues.password}
-                        name='password'
                     />
                 </label>
                 
