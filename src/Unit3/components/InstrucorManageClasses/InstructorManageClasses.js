@@ -22,7 +22,7 @@ export default function InstructorManageClasses(props) {
     const [instructor, setInstructor] = useState({})
     const { classes, setClasses } = props
 
-    //GET INSTRUCTOR'S CLASSES
+    //GET INSTRUCTOR'S CLASSES`
     useEffect(()=> {
         axiosWithAuth().get(`${baseURL}/users/getuserinfo`)
             .then(res =>{
@@ -32,14 +32,6 @@ export default function InstructorManageClasses(props) {
             .catch(err =>console.log(err))
     }, [setClasses])
     
-    //DELETE CLASS
-    const deleteClass = () => {
-
-        //axios delete 
-        //promise should set classes to new array
-        
-    }
-
     return (
         <StyledDiv>
             <h2>Class Management</h2>
@@ -48,9 +40,9 @@ export default function InstructorManageClasses(props) {
             ? <CreateClass setIsCreating={setIsCreating} instructor={instructor} setClasses={setClasses} classes={classes} /> 
             : <StyledButton onClick={()=> setIsCreating(true)}>Create a Class</StyledButton>
             }
-            <div style={{display: 'flex', flexFlow: 'row wrap', width:'100%'}}>
+            <div style={{display: 'flex', flexFlow: 'row wrap', width:'100%', justifyContent: 'space-evenly'}}>
                 { //c is class
-                classes && classes.map(c => <InstructorClass key={c.classid} c={c} setClasses={setClasses}/>)
+                classes && classes.map(c => <InstructorClass key={c.classid} c={c} classes={classes} setClasses={setClasses}/>)
                 }
             </div>
         </StyledDiv>

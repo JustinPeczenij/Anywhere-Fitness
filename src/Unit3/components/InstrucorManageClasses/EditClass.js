@@ -9,7 +9,7 @@ import {
 import moment from 'moment';
 
 export default function EditClass(props) {
-    const { c, setIsEditing, setClasses } = props;
+    const { c, setIsEditing, deleteClass } = props;
     const [formValues, setFormValues] = useState({
         name: c.name,
         type: c.type,
@@ -42,11 +42,6 @@ export default function EditClass(props) {
         //set changes global state (classes) so we can see in app.
 
         setIsEditing(false)
-    }
-
-    const deleteClass = () => {
-        //axios delete 
-        //promise should set classes to new array
     }
 
     return (<MuiPickersUtilsProvider utils={DateMomentUtils}>
@@ -125,7 +120,7 @@ export default function EditClass(props) {
                     onChange={handleChanges}
                 />
                 <button type='submit'>Save Changes</button>
-                <button type='button'>delete</button>
+                <button type='button' onClick={() => deleteClass()}>delete</button>
                 <button type='button' onClick={() => setIsEditing(false)}>Cancel Changes</button>
             </form>
         </MuiPickersUtilsProvider>)
