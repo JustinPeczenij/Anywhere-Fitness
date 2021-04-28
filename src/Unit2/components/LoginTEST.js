@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 const initialLogin = { username: '', password: '', role: '' };
 
-function Login(props) {
+function LoginTEST(props) {
 	const [credentials, setCredentials] = useState(initialLogin);
 	const change = (event) => {
 		const { name, value } = event.target;
@@ -64,4 +64,4 @@ function Login(props) {
 	);
 };
 
-export default Login;
+export default LoginTEST;
