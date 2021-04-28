@@ -36,7 +36,7 @@ export default function Signup() {
 
     //LOGIN FUNCTIONALITY HERE (SHOULD PROBABLY WRAP AXIOS POST for signup):
         //Axios POSTS HERE ()
-            if (clientRole.Role === 'Instructor') {
+            if (clientRole.role === 'Instructor') {
               axios.post('https://team-32-anywhere-fitness.herokuapp.com/createnewinstructor', newClient)
                    .then(res => {
                       setFormValues(initialFormValues)
