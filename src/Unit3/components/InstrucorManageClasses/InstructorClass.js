@@ -1,19 +1,20 @@
 import { useState } from 'react';
-import EditClass from './EditClass'
+import EditClass from './EditClass';
+import styled from 'styled-components';
+
+const StyledDiv = styled.div`
+  margin: 1%;
+  padding:1%;
+  border: 2px solid black;
+  width: 20%;
+`;
 
 export default function InstructorClass(props) {
     const { c, setClasses } = props //c is class
     const [isEditing, setIsEditing] = useState(false)
 
-    const deleteClass = () => {
-
-        //axios delete 
-        //promise should set classes to new array
-        
-    }
-
     return (
-      <div>
+      <StyledDiv>
         <div className='class-container' >
             <h3>{c.name}</h3>
             <p>Type: {c.type}</p>
@@ -25,6 +26,6 @@ export default function InstructorClass(props) {
         <div>
             {isEditing && <EditClass c={c} setIsEditing={setIsEditing} setClasses={setClasses} />}
         </div>
-      </div>
+      </StyledDiv>
     )
 }
