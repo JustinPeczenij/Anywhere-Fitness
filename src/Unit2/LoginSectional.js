@@ -3,8 +3,10 @@ import axios from 'axios';
 import LoginForm from './LoginForm';
 import { baseURL } from '../Unit3/utils/baseURL';
 import { useHistory } from 'react-router-dom';
+import { axiosWithAuth } from '../Unit3/utils/axiosWithAuth';
 
 const initialFormValues = {
+  role: '',
   username: '',
   password: '',
 }
@@ -19,7 +21,7 @@ export default function Login(props) {
   
   const submitForm = () => {
     //PREVENT EMPTY SUBMISSIONS:
-    // if (!formValues.username || !formValues.role) return
+    if (!formValues.username  || !formValues.role) return
 
     axios.post(
 				`${baseURL}/login`,
@@ -32,10 +34,18 @@ export default function Login(props) {
 				,}
 			,)
 			.then((res) => {
+        console.log(res)
         setFormValues(initialFormValues);
 				localStorage.setItem('token', res.data.access_token);
-				history.push('/manage');
 			})
+      .then(res => {
+        axiosWithAuth().get(`${baseURL}/users/getuserinfo`)
+          .then(res => {
+            console.log(res)
+            window.localStorage.setItem('role', res.data.role)
+            formValues.role === 'instructor' ? history.push('/manage') : history.push('/dashboard')
+          })
+      })
 			.catch((err) => {
 				setFormValues(initialFormValues);
 			});

@@ -20,8 +20,8 @@ export default function LoginForm(props) {
                 <label>Role:
                     <select value={loginValues.role} name='role' onChange={onChange} placeholder='--select--'>
                         <option value=''>--Select Position--</option>
-                        <option value='Instructor'>Instructor</option>
-                        <option value='User'>User</option>
+                        <option value='instructor'>Instructor</option>
+                        <option value='client'>Client</option>
                     </select>
                 </label>
                 <h4>*User type should reveal auth code input if instructor selected*</h4>
