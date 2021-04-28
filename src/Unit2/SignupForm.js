@@ -24,8 +24,8 @@ export default function SignupForm(props) {
                 <label>Role:
                     <select value={signupValues.role} name='role' onChange={onChange} placeholder='...select...'>
                         <option value=''>--Select Postion--</option>
-                        <option value='Instructor'>Instructor</option>
-                        <option value='User'>User</option>
+                        <option value='instructor'>Instructor</option>
+                        <option value='client'>Client</option>
                     </select>
                 </label>
 

@@ -32,7 +32,7 @@ export default function Login(props) {
 				,}
 			,)
 			.then((res) => {
-				console.log(res)
+        setFormValues(initialFormValues);
 				localStorage.setItem('token', res.data.access_token);
 				history.push('/manage');
 			})

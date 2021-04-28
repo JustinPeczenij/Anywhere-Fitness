@@ -1,9 +1,5 @@
 import React from 'react'
 
-
-
-
-//BUILDS LOGIN FORM:
 export default function LoginForm(props) {
     const { loginValues, loginUpdate, loginSubmit } = props
 
