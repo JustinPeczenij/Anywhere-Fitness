@@ -12,7 +12,7 @@ const StyledDiv = styled.div`
 `;
 
 export default function InstructorClass(props) {
-    const { c, classes, setClasses } = props //c is class
+    const { c, classes, setClasses, instructor } = props //c is class
     const [isEditing, setIsEditing] = useState(false)
 
     //DELETE CLASS
@@ -24,8 +24,6 @@ export default function InstructorClass(props) {
           ])
         })
         .catch(err => console.log(err))
-        //axios delete 
-        //promise should set classes to new array
     }
 
     return (
@@ -39,7 +37,7 @@ export default function InstructorClass(props) {
             {isEditing ? null : <button onClick={() => setIsEditing(true)}>edit</button>}
         </div>
         <div>
-            {isEditing && <EditClass c={c} setIsEditing={setIsEditing} deleteClass={deleteClass} />}
+            {isEditing && <EditClass c={c} setIsEditing={setIsEditing} classes={classes} setClasses={setClasses} deleteClass={deleteClass} instructor={instructor}/>}
         </div>
       </StyledDiv>
     )

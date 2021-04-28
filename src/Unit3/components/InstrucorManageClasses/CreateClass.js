@@ -86,7 +86,6 @@ export default function CreateClassPage(props) {
                         value={selectedDate}
                         onChange={date => setSelectedDate(date._d)}
                         minDate={new Date()}
-                        format="LL"
                 />
                     
                 <label htmlFor='startTime'>Start Time: </label>

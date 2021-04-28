@@ -42,7 +42,7 @@ export default function InstructorManageClasses(props) {
             }
             <div style={{display: 'flex', flexFlow: 'row wrap', width:'100%', justifyContent: 'space-evenly'}}>
                 { //c is class
-                classes && classes.map(c => <InstructorClass key={c.classid} c={c} classes={classes} setClasses={setClasses}/>)
+                classes && classes.map(c => <InstructorClass key={c.classid} c={c} classes={classes} setClasses={setClasses} instructor={instructor} />)
                 }
             </div>
         </StyledDiv>
