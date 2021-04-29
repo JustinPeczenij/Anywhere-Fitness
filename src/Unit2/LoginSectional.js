@@ -33,7 +33,6 @@ export default function Login() {
 				,}
 			,)
 			.then((res) => {
-        console.log(res)
         setFormValues(initialFormValues);
 				localStorage.setItem('token', res.data.access_token);
 			})

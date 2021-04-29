@@ -1,10 +1,30 @@
+import { useState } from 'react'
 import styled from 'styled-components'
+import { axiosWithAuth } from '../../utils/axiosWithAuth';
+import { baseURL } from '../../utils/baseURL';
 
 const background1 = '#282F56'
 const background2 = '#2A2F4A'
 
+
+//RESERVE STATE DOES NOT PERSIST WITH DB.
 export default function ClientClassCard(props){
-  const {c} = props
+  const [isReserved, setIsReserved] = useState(false);
+  const {c, user} = props
+
+  const handleReserve = () => {
+    setIsReserved(true)
+    axiosWithAuth().patch(`${baseURL}/classes/class/${c.classid}/addclient/`)
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
+  }
+
+  const handleCancelReserve = () => {
+    setIsReserved(false)
+    axiosWithAuth().patch(`${baseURL}/classes/class/${c.classid}/removeclient/`)
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
+  }
 
   return (
     <DivMain color={props.color}>
@@ -17,7 +37,9 @@ export default function ClientClassCard(props){
         <p>Where: {c.location}</p>
         <p>Duration: {c.duration} minutes</p>
         <p>When: {c.date} @ {c.starttime}</p>
-
+        {!isReserved && <button onClick={handleReserve}>Reserve a Spot!</button>}
+        {isReserved && <h3 style={{color:'red'}}>RESERVED!</h3>}
+        {isReserved && <button onClick={handleCancelReserve}>Cancel Reservation</button>}
       </DivContent>
     </DivMain>
   )
