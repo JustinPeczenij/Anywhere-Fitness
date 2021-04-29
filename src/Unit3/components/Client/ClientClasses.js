@@ -1,54 +1,34 @@
 import { useState, useEffect } from 'react'
+import { axiosWithAuth } from '../../utils/axiosWithAuth'
+
+import { baseURL } from '../../utils/baseURL';
 
 import ClientClassCard from './ClientClassCard'
 
-const example = [
-    {
-    date: "Apr 30th 2021",
-    duration: 45,
-    intensitylevel: "BEGINNER",
-    location: "Allentown,  PA",
-    maxsize: 45,
-    name: "Justin K Peczenij",
-    numregisteredattendees: 0,
-    starttime: "6:30 pm",
-    type: "Yoga",
-    },
-   {
-    date: "Apr 30th 2021",
-    duration: 45,
-    intensitylevel: "BEGINNER",
-    location: "Allentown,  PA",
-    maxsize: 45,
-    name: "Justin K Peczenij",
-    numregisteredattendees: 0,
-    starttime: "6:30 pm",
-    type: "Yoga",    
-   },
-  
-]
 
-export default function FindClass(props){
-  const [results, setResults] = useState(example)
+export default function ClientClasses(props){
+  const [results, setResults] = useState()
   const [errors, setErrors] = useState()
 
-//   useEffect(() => {
-//     getMyClasses()
-//       .then( res => {
-//         // console.log(res)
-//         setResults(res.data)
-//       })
-//       .catch( err => {
-//         // console.log(err)
-//       })
-//   }, [])
+  useEffect(() => {
+    
+    axiosWithAuth()
+    .get(`${baseURL}/classes/classes`)
+    .then( res => {
+        console.log(res)
+     setResults(res.data)
+      })
+      .catch( err => {
+          console.log(err)
+      })
+  }, [])
 
   
 
   return (
     <div style={{display: 'flex'}} >
       <div style={{marginLeft: '40px', flexGrow: 1}}>{
-        results && results.length > 0 ? results.map( (lesson, i) => <ClientClassCard key={lesson.id} class={lesson} color={i%2} Component={Withdraw} update={withdraw}/>)
+        results && results.length > 0 ? results.map( (c, i) => <ClientClassCard key={c.id} class={c} color={i%2} />)
         : <p>You don't have any classes yet.</p>}
       </div>
     </div>

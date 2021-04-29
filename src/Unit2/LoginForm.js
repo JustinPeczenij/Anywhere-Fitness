@@ -1,19 +1,15 @@
 import React from 'react'
-
 export default function LoginForm(props) {
     const { loginValues, loginUpdate, loginSubmit } = props
-
     //Functions Establishing Input Interactivity:
     const onChange = event => {
         const { name, value } = event.target
         loginUpdate(name, value)
     }
-
     const onSubmit = event => {
         event.preventDefault()
         loginSubmit()
     }
-
     return (
         <div className='login-form'>
             <form className='login-form-section' onSubmit={onSubmit}>
