@@ -55,8 +55,8 @@ export default function LoginForm(props) {
                     />
                 </label>
                 
-                <div className='submitbtn'>
-                    <button>Submit</button>
+                <div className='loginSubmit'>
+                    <button disabled={!loginValues.username || !loginValues.password || !loginValues.primaryemail || !loginValues.role}>Submit</button>
                 </div>
             </form>
         </div>
