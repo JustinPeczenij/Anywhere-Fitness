@@ -7,12 +7,12 @@ import { baseURL } from '../Unit3/utils/baseURL';
 
 const initialFormValues = {
   role: '',
+  password: '',
   primaryemail: '',
   username: '',
-  password: '',
-}
+};
 
-export default function Signup(props) {
+export default function Signup() {
   const [formValues, setFormValues] = useState(initialFormValues)
   const history = useHistory();
 
@@ -23,20 +23,15 @@ export default function Signup(props) {
 
   //LOGIN FUNCTION
   const submitForm = () => {
-    const newClient = {
+    const newminuser = {
+      password: formValues.password,
       primaryemail: formValues.primaryemail,
       username: formValues.username,
-      password: formValues.password,
     }
-
-    //PREVENT EMPTY SUBMISSIONS:
-    // if (!newClient.username || !newClient.password || !newClient.primaryemail || !newClient.role) return
-
 
 
     //Axios POSTS HERE (should CLEAR form on successful submission...avoids multiple posts of same card):
-
-    axios.post(`${baseURL}/createnew${formValues.role}`, newClient) 
+    axios.post(`${baseURL}/createnew${formValues.role}`, newminuser) 
       .then(res => {
         setFormValues(initialFormValues)
         window.localStorage.setItem('token', res.data.access_token)
@@ -45,6 +40,7 @@ export default function Signup(props) {
       .catch(err => {
         console.log(err);
       })
+      
   }
   return (
     <div className='login-sectional'>

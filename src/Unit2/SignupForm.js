@@ -58,8 +58,8 @@ export default function SignupForm(props) {
                         maxLength='40'
                     />
                 </label>
-                <div className='submitbtn'>
-                    <button>Submit</button>
+                <div className='signupSubmit'>
+                    <button disabled={!signupValues.username || !signupValues.password || !signupValues.primaryemail || !signupValues.role}>Submit</button>
                 </div>
             </form>
         </div>

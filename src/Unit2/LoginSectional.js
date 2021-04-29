@@ -1,45 +1,35 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+
 import LoginForm from './LoginForm';
-import { baseURL } from '../Unit3/utils/baseURL';
-import { useHistory } from 'react-router-dom';
 
 const initialFormValues = {
-  username: '',
+  role: '',
   password: '',
-}
+  primaryemail: '',
+  username: '',
+};
 
-export default function Login(props) {
+export default function Login() {
   const [formValues, setFormValues] = useState(initialFormValues)
-  const history = useHistory()
+
+
   //Functions Input Interactivity:
   const updateForm = (inputName, inputValue) => {
     setFormValues({...formValues, [inputName]: inputValue })
   }
-  
   const submitForm = () => {
-    //PREVENT EMPTY SUBMISSIONS:
-    // if (!formValues.username || !formValues.role) return
+    const newminuser = {
+      password: formValues.password,
+      primaryemail: formValues.primaryemail,
+      username: formValues.username,
+    }
 
-    axios.post(
-				`${baseURL}/login`,
-				`grant_type=password&username=${formValues.username}&password=${formValues.password}`,
-				{
-					headers: { // btoa is converting our client id/client secret into base64
-						Authorization: `Basic ${btoa('lambda-client:lambda-secret')}`,
-						'Content-Type': 'application/x-www-form-urlencoded',
-					}
-				,}
-			,)
-			.then((res) => {
-        setFormValues(initialFormValues);
-				localStorage.setItem('token', res.data.access_token);
-				history.push('/manage');
-			})
-			.catch((err) => {
-				setFormValues(initialFormValues);
-			});
-	};
+    
+    //LOGIN FUNCTIONALITY HERE:
+      //*Changed newClient to newminuser bc swaggerUI specifies that for backend
+      //*I gave initialFormValues role but not the newminuser because of the object model
+      //*Not entirely certain how you want to initialize auth code to instructor in login logic but I left the role drop down selector so it could be done
+  }
 
   return (
       <div className='login-sectional'>
