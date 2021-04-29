@@ -9,6 +9,8 @@ import Header from './Unit2/Header'
 import Home from './Unit2/HomeSectional'
 import Login from './Unit2/LoginSectional'
 import Signup from './Unit2/SignupSectional'
+import ClientDash from './Unit3/components/Client/ClientDashboard';
+
 
 
 
@@ -31,6 +33,7 @@ function App() {
         <Route path='/signup' component={Signup} /> 
         <Route exact path='/' component={Home} /> 
       </Switch>
+
     </div>
   );
 }

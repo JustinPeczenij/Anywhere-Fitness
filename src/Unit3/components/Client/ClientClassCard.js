@@ -1,30 +1,7 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-const example = [
-    {
-    date: "Apr 30th 2021",
-    duration: 45,
-    intensitylevel: "BEGINNER",
-    location: "Allentown,  PA",
-    maxsize: 45,
-    name: "Justin K Peczenij",
-    numregisteredattendees: 0,
-    starttime: "6:30 pm",
-    type: "Yoga",
-    },
-   {
-    date: "Apr 30th 2021",
-    duration: 45,
-    intensitylevel: "BEGINNER",
-    location: "Allentown,  PA",
-    maxsize: 45,
-    name: "Justin K Peczenij",
-    numregisteredattendees: 0,
-    starttime: "6:30 pm",
-    type: "Yoga",    
-   },
-  
-]
+const background1 = '#282F56'
+const background2 = '#2A2F4A'
 
 export default function ClientClassCard(props){
   const {c} = props
@@ -46,6 +23,7 @@ export default function ClientClassCard(props){
   )
 }
 const DivMain = styled.div`
+  background: ${props => props.color === 0 ? background1 : background2};
   display: flex;
   padding: 10px;
   width: 80%;
@@ -69,5 +47,4 @@ const DivMain = styled.div`
 
 const DivContent = styled.div`
   flex-grow: 1;
-  border: 1px solid black;
 `

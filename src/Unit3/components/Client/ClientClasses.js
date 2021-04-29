@@ -25,7 +25,6 @@ const example = [
     starttime: "6:30 pm",
     type: "Yoga",    
    },
-  
 ]
 
 export default function FindClass(props){

@@ -1,64 +1,80 @@
+
+import { deprecationHandler } from 'moment';
 import { useEffect, useState } from 'react'
 
-import ClientClassCard from './ClientClassCard'
-// import Register from './Register'
-import axios from 'axios';
+const initialFormValues = {
+    time : "",
+    date : "",
+    duration : "",
+    type : "",
+    intensity :"",
+    location : "",
+}
 
-
-
-const example = [
-  {
-    date: "Apr 30th 2021",
-    duration: 45,
-    intensitylevel: "BEGINNER",
-    location: "Allentown,  PA",
-    maxsize: 45,
-    name: "Justin K Peczenij",
-    numregisteredattendees: 0,
-    starttime: "6:30 pm",
-    type: "Yoga",
-  },
-  {
-    date: "Apr 30th 2021",
-    duration: 45,
-    intensitylevel: "BEGINNER",
-    location: "Allentown,  PA",
-    maxsize: 45,
-    name: "Justin K Peczenij",
-    numregisteredattendees: 0,
-    starttime: "6:30 pm",
-    type: "Yoga",
-  },
-]
 
 export default function FindClass(props){
-  const [results, setResults] = useState(example)
-  const [myClassIDS, setMyClassIDS] = useState([])
-  const [errors, setErrors] = useState()
-
-  useEffect(() => {
-
-    axios
-      .get()
-      .then( res => {
-        setMyClassIDS(res.data.map( obj => obj.id))
-      })
-      .catch( err => {
-      })
-  },[])
-
-  function setNewClasses(results){
-    const today = new Date().toISOString().split('T')[0].split('-').join('');
-    setResults(results.filter( obj => !myClassIDS.includes(obj.id) && obj.starttime.split('T')[0].split('-').join('') > today))
-
-    
+  
+  const [ formValues, setFormValues ] = useState(initialFormValues);
+  
+  const timeFilter = async() => {
+      const filteredClasses = props.classes.filter(c => c.starttime === (formValues.time))
+      await props.setClasses(filteredClasses)
   }
+   const handleChanges = (evt) => {
+       setFormValues({
+           ...formValues, 
+           [evt.target.name] : evt.target.value
+       })
+       timeFilter()
+       console.log(props.classes)
+   }
+
+
 
   return (
-    <div style={{display: 'flex'}} >
-      <div style={{marginLeft: '40px', flexGrow: 1}}>
-        {/* {results.map( (lesson, i) => <ClientClassCard key={lesson.id} class={lesson} color={i%2} Component={Register}/>)} */}
-      </div>
-    </div>
+    <form>
+        <label htmlFor = "time"> Time: </label>
+        <input 
+        name = "time"
+        type = "text"
+        value = {formValues.time}
+        onChange = {handleChanges}
+        />
+        <label htmlFor = "date"> Date: </label>
+        <input 
+        name = "date"
+        type = "text"
+        value = {formValues.date}
+        onChange = {handleChanges}
+        />
+        <label htmlFor = "duration"> Duration: </label>
+        <input 
+        name = "duration"
+        type = "text"
+        value = {formValues.duration}
+        onChange = {handleChanges}
+        />
+        <label htmlFor = "type"> Class Type: </label>
+        <input 
+        name = "type"
+        type = "text"
+        value = {formValues.type}
+        onChange = {handleChanges}
+        />
+        <label htmlFor = "intensity"> Intensity: </label>
+        <input 
+        name = "intensity"
+        type = "text"
+        value = {formValues.intensity}
+        onChange = {handleChanges}
+        />
+        <label htmlFor = "location"> Location: </label>
+        <input 
+        name = "location"
+        type = "text"
+        value = {formValues.location}
+        onChange = {handleChanges}
+        />
+    </form>
   )
 }
