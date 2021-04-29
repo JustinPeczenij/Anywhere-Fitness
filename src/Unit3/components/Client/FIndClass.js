@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 import ClientClassCard from './ClientClassCard'
 // import Register from './Register'
 import axios from 'axios';
+import { axiosWithAuth } from '../../utils/axiosWithAuth';
+import { baseURL } from '../../utils/baseURL';
 
 
 
@@ -38,8 +40,8 @@ export default function FindClass(props){
 
   useEffect(() => {
 
-    axios
-      .get()
+    axiosWithAuth()
+      .get(`${baseURL}/classes/classes`)
       .then( res => {
         setMyClassIDS(res.data.map( obj => obj.id))
       })

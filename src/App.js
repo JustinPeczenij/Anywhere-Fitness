@@ -8,6 +8,8 @@ import Header from './Unit2/Header'
 import Home from './Unit2/HomeSectional'
 import Login from './Unit2/LoginSectional'
 import Signup from './Unit2/SignupSectional'
+import ClientDash from './Unit3/components/Client/ClientDashboard';
+
 
 
 function App() {
@@ -22,23 +24,15 @@ function App() {
           {
             //Header Signup, Login Page Links:
           }
-          <Switch>
-            <Route path='/signup'>
-              <Signup />
-            </Route>
-            <Route path='/login'>
-              <Login />
-            </Route> 
-            <Route path='/'>
-              <Home />
-            </Route>
-          </Switch>
-          
       </header>
       <Switch>
-        <PrivateRoute path='/manage' component={InstructorManageClasses} />
-        <Route exact path='/' /> 
+        <PrivateRouteClient path='/dashboard' component={ClientDashboard} />
+        <PrivateRouteInstructor path='/manage' component={InstructorManageClasses} />
+        <Route path='/login' component={Login} /> 
+        <Route path='/signup' component={Signup} /> 
+        <Route exact path='/' component={Home} /> 
       </Switch>
+
     </div>
   );
 }
