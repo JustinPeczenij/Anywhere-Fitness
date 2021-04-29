@@ -1,7 +1,7 @@
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 
-import { PrivateRoute, PrivateRouteInstructor } from './Unit3/utils/PrivateRoute'
+import { PrivateRoute, PrivateRouteClient, PrivateRouteInstructor } from './Unit3/utils/PrivateRoute'
 import InstructorManageClasses from './Unit3/components/InstrucorManageClasses/InstructorManageClasses';
 import ClientDashboard from './Unit3/components/Client/ClientDashboard'
 //Unit 2 Component Imports:
@@ -25,7 +25,7 @@ function App() {
           }          
       </header>
       <Switch>
-        {/* <PrivateRoute path='/dashboard' component={ClientDashboard} /> */}
+        <PrivateRouteClient path='/dashboard' component={ClientDashboard} />
         <PrivateRouteInstructor path='/manage' component={InstructorManageClasses} />
         <Route path='/login' component={Login} /> 
         <Route path='/signup' component={Signup} /> 
