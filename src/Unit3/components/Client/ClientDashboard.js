@@ -1,6 +1,4 @@
-import { Route, Link, Switch } from 'react-router-dom';
-import  ClientClasses  from './ClientClasses';
-import  FindClass  from './FindClass';
+import  FindClass  from './FIndClass';
 
 import { useEffect, useState } from 'react';
 import 'intro.js/introjs.css';
@@ -8,12 +6,13 @@ import introJs from 'intro.js';
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
 import { baseURL } from '../../utils/baseURL';
 import ClientClassCard from './ClientClassCard';
+import axios from 'axios';
 
 
 
   
   export default function ClientDash(props){
-
+    const [user, setUser] = useState()
     const [classes, setClasses] = useState();
 
     const checkForOnboarding = () => {
@@ -30,28 +29,32 @@ import ClientClassCard from './ClientClassCard';
     }, [])
 
     useEffect(() => {
-    
         axiosWithAuth()
         .get(`${baseURL}/classes/classes`)
         .then( res => {
             console.log(res)
-         setClasses(res.data)
+            setClasses(res.data)
           })
           .catch( err => {
               console.log(err)
           })
       }, [])
 
+      useEffect(()=> {
+        axiosWithAuth().get(`${baseURL}/users/getuserinfo`)
+          .then(res => setUser(res))
+          .catch(err => console.log(err))
+      }, [])
 
     return (<div style={{
       margin: '0 auto',
       maxWidth: '1100px',
       width: '90%',
     }}>
-      This is ClientDash<br/>
+      <h2>Client Dashboard</h2>
       <FindClass classes = {classes} setClasses = {setClasses} />
       <div style={{display: 'flex', justifyContent: 'space-around', margin: '5px 0'}}>
-          {classes && classes.map(c => <ClientClassCard c = {c} key = {c.classid}  />)}
+          {classes && classes.map(c => <ClientClassCard c={c} key={c.classid} classes={classes} user={user} />)}
       </div>
     </div>
   )

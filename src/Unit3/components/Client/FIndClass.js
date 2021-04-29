@@ -3,7 +3,7 @@ import { deprecationHandler } from 'moment';
 import { useEffect, useState } from 'react'
 
 const initialFormValues = {
-    time : "",
+    starttime : "",
     date : "",
     duration : "",
     type : "",
@@ -13,29 +13,22 @@ const initialFormValues = {
 
 
 export default function FindClass(props){
-  
   const [ formValues, setFormValues ] = useState(initialFormValues);
+  const {classes, setClasses} = props
   
-  const timeFilter = async() => {
-      const filteredClasses = props.classes.filter(c => c.starttime === (formValues.time))
-      await props.setClasses(filteredClasses)
-  }
    const handleChanges = (evt) => {
        setFormValues({
            ...formValues, 
            [evt.target.name] : evt.target.value
        })
-       timeFilter()
-       console.log(props.classes)
+      setClasses(classes.filter(c => c.duration === (formValues.duration)))
    }
-
-
 
   return (
     <form>
-        <label htmlFor = "time"> Time: </label>
+        <label htmlFor = "starttime"> Time: </label>
         <input 
-        name = "time"
+        name = "starttime"
         type = "text"
         value = {formValues.time}
         onChange = {handleChanges}
