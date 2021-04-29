@@ -7,18 +7,18 @@ import { axiosWithAuth } from '../Unit3/utils/axiosWithAuth';
 
 const initialFormValues = {
   role: '',
-  username: '',
   password: '',
-}
+  primaryemail: '',
+  username: '',
+};
 
-export default function Login(props) {
+export default function Login() {
   const [formValues, setFormValues] = useState(initialFormValues)
-  const history = useHistory()
+  const history = useHistory();
   //Functions Input Interactivity:
   const updateForm = (inputName, inputValue) => {
     setFormValues({...formValues, [inputName]: inputValue })
   }
-  
   const submitForm = () => {
     //PREVENT EMPTY SUBMISSIONS:
     if (!formValues.username  || !formValues.role) return
