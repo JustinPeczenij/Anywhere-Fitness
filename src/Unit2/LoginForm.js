@@ -20,31 +20,11 @@ export default function LoginForm(props) {
                 <label>Role:
                     <select value={loginValues.role} name='role' onChange={onChange} placeholder='--select--'>
                         <option value=''>--Select Position--</option>
-                        <option value='Instructor'>Instructor</option>
-                        <option value='User'>User</option>
+                        <option value='instructor'>Instructor</option>
+                        <option value='client'>Client</option>
                     </select>
                 </label>
-                <h4>*User type should reveal auth code input if instructor selected*</h4>
-
-                <label>Password:
-                    <input
-                        type='text'
-                        onChange={onChange}
-                        value={loginValues.password}
-                        name='password'
-                    />
-                </label>
-
-                <label>Primary Email:
-                    <input
-                        type='text'
-                        onChange={onChange}
-                        value={loginValues.primaryemail}
-                        name='primaryemail'
-                        maxLength='40'
-                    />
-                </label>
-
+                
                 <label>Username:
                     <input
                         type='text'
@@ -55,8 +35,17 @@ export default function LoginForm(props) {
                     />
                 </label>
                 
+                <label>Password:
+                    <input
+                        type='text'
+                        onChange={onChange}
+                        value={loginValues.password}
+                        name='password'
+                    />
+                </label>
+
                 <div className='loginSubmit'>
-                    <button disabled={!loginValues.username || !loginValues.password || !loginValues.primaryemail || !loginValues.role}>Submit</button>
+                    <button disabled={!loginValues.username || !loginValues.password || !loginValues.role}>Submit</button>
                 </div>
             </form>
         </div>

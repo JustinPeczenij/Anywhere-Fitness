@@ -22,7 +22,7 @@ export default function InstructorManageClasses(props) {
     const [isCreating, setIsCreating] = useState(false)
     const [instructor, setInstructor] = useState({})
 
-    //GET INSTRUCTOR'S CLASSES`
+    //GET INSTRUCTOR'S CLASSES` - ideally I would make a store and useContext to populate classes(setClasses) at the login axios.get - but I don't have time for that right now.
     useEffect(()=> {
         axiosWithAuth().get(`${baseURL}/users/getuserinfo`)
             .then(res =>{
