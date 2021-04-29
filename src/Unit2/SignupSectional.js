@@ -31,7 +31,7 @@ export default function Signup(props) {
     }
 
     //PREVENT EMPTY SUBMISSIONS:
-    if (!newminuser.username || !newminuser.password || !newminuser.primaryemail || !newminuser.role) return
+    if (newminuser.username === '' || newminuser.password === '' || newminuser.primaryemail === '' || newminuser.role=== '') return
     //Axios POSTS HERE (should CLEAR form on successful submission...avoids multiple posts of same card):
 
     axios.post(`${baseURL}/createnew${formValues.role}`, newminuser) 

@@ -8,7 +8,6 @@ import { axiosWithAuth } from '../Unit3/utils/axiosWithAuth';
 const initialFormValues = {
   role: '',
   password: '',
-  primaryemail: '',
   username: '',
 };
 
