@@ -41,6 +41,8 @@ export default function Login() {
         axiosWithAuth().get(`${baseURL}/users/getuserinfo`)
           .then(res => {
             console.log(res)
+            //ADDING id_first TO CHECK IF USER SHOULD SEE ONBOARDING -- ONLY ON FIRST SIGN UP
+            window.localStorage.setItem('id_first', res.data.instructorid ? res.data.instructorid : res.data.userid)
             window.localStorage.setItem('role', res.data.role)
             formValues.role === 'instructor' ? history.push('/manage') : history.push('/dashboard')
           })
