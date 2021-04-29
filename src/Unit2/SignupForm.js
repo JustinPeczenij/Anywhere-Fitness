@@ -54,7 +54,7 @@ export default function SignupForm(props) {
                         type='text'
                         onChange={onChange}
                         value={signupValues.primaryemail}
-                        name='primaryemail'
+                        name='email'
                         maxLength='40'
                     />
                 </label>
